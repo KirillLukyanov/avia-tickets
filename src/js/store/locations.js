@@ -1,26 +1,28 @@
 import api from '../services/apiService';
+import { formatDate } from '../helpers/date';
 
 class Locations {
-  constructor(api) {
+  constructor(api, helpers) {
     this.api = api;
     this.countries = null;
     this.cities = null;
     this.shortCitiesList = null;
     this.lastSearch = {};
-    // this.airlines = {};
+    this.airlines = {};
+    this.formatDate = helpers.formatDate;
   }
   async init() {
     const response = await Promise.all([
       this.api.countries(),
       this.api.cities(),
-      // this.api.airlines(),
+      this.api.airlines(),
     ]);
 
-    const [countries, cities] = response;
+    const [countries, cities, airlines] = response;
     this.countries = this.serializeCountries(countries);
     this.cities = this.serializeCities(cities);
     this.shortCitiesList = this.createShortCitiesList(this.cities);
-    // this.airlines = this.serializeAirlines(airlines);
+    this.airlines = this.serializeAirlines(airlines);
     // console.log(this.cities);
     return response;
   }
@@ -97,13 +99,15 @@ class Locations {
         ...ticket,
         origin_name: this.getCityNameByCode(ticket.origin),
         destination_name: this.getCityNameByCode(ticket.destination),
-        // airline_logo: this.getAirlineLogoByCode(ticket.airline),
-        // airline_name: this.getAirlineNameByCode(ticket.airline),
+        airline_logo: this.getAirlineLogoByCode(ticket.airline),
+        airline_name: this.getAirlineNameByCode(ticket.airline),
+        departure_at: this.formatDate(ticket.departure_at, 'dd MMM yyyy hh:mm'),
+        return_at: this.formatDate(ticket.return_at, 'dd MMM yyyy hh:mm'),
       };
     });
   }
 }
 
-const locations = new Locations(api);
+const locations = new Locations(api, { formatDate });
 
 export default locations;

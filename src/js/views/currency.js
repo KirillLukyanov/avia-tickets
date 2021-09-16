@@ -1,9 +1,18 @@
 class CurrencyUI {
   constructor() {
     this.currency = document.getElementById('currency');
+    this.dictionary = {
+      USD: '$',
+      EUR: '€',
+    };
   }
   get currencyValue() {
     return this.currency.value;
+  }
+
+  getСurrencySymbol() {
+    // console.log(this);
+    return this.dictionary[this.currencyValue];
   }
 }
 

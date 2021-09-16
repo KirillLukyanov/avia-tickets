@@ -58,6 +58,10 @@
   padding: 10px 15px;
 }
 
+.ticket-airline {
+  min-height: 100px;
+}
+
 .ticket-airline-name {
   font-weight: bold;
   font-size: 18px;
