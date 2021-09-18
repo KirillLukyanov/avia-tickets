@@ -3,6 +3,7 @@ import '../css/style.css';
 import locations from './store/locations';
 import formUI from './views/form';
 import ticketsUI from './views/tickets';
+import favoriteTickets from './store/favoriteTickets';
 import currencyUI from './views/currency';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -14,6 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     onFormSubmit();
   });
+
+  ticketsUI.addToFavoriteListener();
+  ticketsUI.renderFavoriteTickets(favoriteTickets.favoriteList);
+  ticketsUI.removeFromFavoriteListener();
 
   // Handlers
   async function initApp() {

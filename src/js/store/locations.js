@@ -1,5 +1,6 @@
 import api from '../services/apiService';
 import { formatDate } from '../helpers/date';
+import currencyUI from '../views/currency';
 
 class Locations {
   constructor(api, helpers) {
@@ -90,7 +91,7 @@ class Locations {
   async fetchTickets(params) {
     const response = await this.api.prices(params);
     this.lastSearch = this.serializeTickets(response.data);
-    // console.log(response);
+    console.log(this.lastSearch);
   }
 
   serializeTickets(tickets) {
@@ -103,6 +104,7 @@ class Locations {
         airline_name: this.getAirlineNameByCode(ticket.airline),
         departure_at: this.formatDate(ticket.departure_at, 'dd MMM yyyy hh:mm'),
         return_at: this.formatDate(ticket.return_at, 'dd MMM yyyy hh:mm'),
+        currencySymbol: currencyUI.getСurrencySymbol.call(currencyUI),
       };
     });
   }
