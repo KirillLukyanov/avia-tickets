@@ -95,6 +95,7 @@ class Locations {
   }
 
   serializeTickets(tickets) {
+    const currencySymbol = currencyUI.getСurrencySymbol.call(currencyUI);
     return Object.values(tickets).map(ticket => {
       return {
         ...ticket,
@@ -104,7 +105,7 @@ class Locations {
         airline_name: this.getAirlineNameByCode(ticket.airline),
         departure_at: this.formatDate(ticket.departure_at, 'dd MMM yyyy hh:mm'),
         return_at: this.formatDate(ticket.return_at, 'dd MMM yyyy hh:mm'),
-        currencySymbol: currencyUI.getСurrencySymbol.call(currencyUI),
+        currencySymbol: currencySymbol,
       };
     });
   }
